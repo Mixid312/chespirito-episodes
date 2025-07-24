@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chespirito - Todos los Episodios</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background-color: #121212;
+      color: #fff;
+    }
+    header {
+      background-color: #1f1f1f;
+      padding: 1rem 2rem;
+      text-align: center;
+      font-size: 2rem;
+      font-weight: bold;
+      letter-spacing: 1.2px;
+      border-bottom: 2px solid #ff3c00;
+    }
+    main {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    #video-player {
+      flex: 3 1 600px;
+      background: #000;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 15px #ff3c00aa;
+    }
+    #video-player iframe {
+      width: 100%;
+      height: 360px;
+      border: none;
+    }
+    #episode-list {
+      flex: 1 1 300px;
+      max-height: 400px;
+      overflow-y: auto;
+      background: #222;
+      border-radius: 10px;
+      padding: 1rem;
+      box-shadow: 0 0 10px #ff3c00aa;
+    }
+    #episode-list h2 {
+      margin-top: 0;
+      text-align: center;
+      color: #ff3c00;
+    }
+    #episode-list ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    #episode-list li {
+      margin: 0.5rem 0;
+    }
+    #episode-list button {
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: #ddd;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      text-align: left;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    #episode-list button:hover, #episode-list button.active {
+      background-color: #ff3c00;
+      color: #fff;
+      font-weight: bold;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #777;
+      background-color: #1f1f1f;
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>Chespirito - Todos los Episodios</header>
+
+<main>
+  <section id="video-player">
+    <iframe
+      id="video-frame"
+      src="https://www.youtube.com/embed/UpJzGQWnFaM"
+      allowfullscreen
+      allow="autoplay; encrypted-media"
+    ></iframe>
+  </section>
+
+  <aside id="episode-list">
+    <h2>Episodios</h2>
+    <ul id="episodes">
+      <!-- Episodios cargados con JS -->
+    </ul>
+  </aside>
+</main>
+
+<footer>© 2025 Chespirito Fan Page</footer>
+
+<script>
+  // Lista de episodios con título y videoId de YouTube
+  const episodes = [
+    { title: "Capítulo 1 - El Chavo del 8", videoId: "UpJzGQWnFaM" },
+    { title: "Capítulo 2 - El Chapulín Colorado", videoId: "kzZ6h6nkz8w" },
+    { title: "Capítulo 3 - Los Caquitos", videoId: "NnXx6Pv5Jrc" },
+    { title: "Capítulo 4 - Chaparrón Bonaparte", videoId: "Jj8CMXprzvY" },
+    { title: "Capítulo 5 - Dr. Chapatín", videoId: "5pyP6FNV4cQ" },
+    { title: "Capítulo 6 - Chapulín y El Chavo", videoId: "hNjYFEkqxUU" },
+    { title: "Capítulo 7 - El Chavo y Quico", videoId: "kItlqgfPhDw" },
+    { title: "Capítulo 8 - La Vecindad", videoId: "S8yk9pFESk0" }
+    // Añade aquí más episodios si quieres
+  ];
+
+  const episodesContainer = document.getElementById("episodes");
+  const videoFrame = document.getElementById("video-frame");
+
+  function loadEpisode(index) {
+    const episode = episodes[index];
+    const url = `https://www.youtube.com/embed/${episode.videoId}?autoplay=1&rel=0`;
+    videoFrame.src = url;
+
+    document.querySelectorAll("#episode-list button").forEach(btn => btn.classList.remove("active"));
+    const btn = document.querySelector(`#episode-list button[data-index="${index}"]`);
+    if (btn) btn.classList.add("active");
+  }
+
+  episodes.forEach((episode, index) => {
+    const li = document.createElement("li");
+    const btn = document.createElement("button");
+    btn.textContent = episode.title;
+    btn.setAttribute("data-index", index);
+    btn.addEventListener("click", () => loadEpisode(index));
+    li.appendChild(btn);
+    episodesContainer.appendChild(li);
+  });
+
+  loadEpisode(0);
+</script>
+
+</body>
+</html>
